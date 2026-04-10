@@ -1,0 +1,23 @@
+#include <stdio.h>
+int main() {
+    int n, r, i, j, C[20][20];
+    printf("Enter total number of students (n): ");
+    scanf("%d", &n);
+    printf("Enter number of students to select (r): ");
+    scanf("%d", &r);
+    if (n < 0 || r < 0 || r > n) {
+        printf("\nInvalid input!\n");
+        printf("Note: n should be >= 0 and r should be between 0 and n.\n");
+        return 0;
+    }
+    for (i = 0; i <= n; i++) {
+        for (j = 0; j <= i; j++) {
+            if (j == 0 || j == i)
+                C[i][j] = 1;
+            else
+                C[i][j] = C[i-1][j-1] + C[i-1][j];
+        }
+    }
+    printf("\nNumber of ways to select %d students from %d students = %d\n", r, n, C[n][r]);
+    return 0;
+}
