@@ -1,0 +1,39 @@
+#include <stdio.h>
+#define MAX 50
+int max(int a, int b) {
+    return (a > b) ? a : b;
+}
+int main() {
+    int n, i, w, capacity, weight[MAX], value[MAX], dp[MAX][MAX];  
+where n → number of items
+           i → item counter
+           w → weight (capacity counter)
+           capacity → maximum weight knapsack can hold
+           weight[] → weights of items
+           value[] → values of items
+          dp[][] → dynamic programming table
+    printf("Enter number of items: ");
+    scanf("%d", &n);
+    for (i = 0; i < n; i++) {
+        printf("Enter weight and value of item %d: ", i + 1);
+        scanf("%d %d", &weight[i], &value[i]);
+    }
+    printf("Enter capacity of knapsack: ");
+    scanf("%d", &capacity);
+    for (i = 0; i <= n; i++) {
+        for (w = 0; w <= capacity; w++) {
+            if (i == 0 || w == 0) {
+                dp[i][w] = 0;  
+            }
+            else if (weight[i - 1] <= w) {
+                dp[i][w] = max(dp[i - 1][w],
+                               value[i - 1] + dp[i - 1][w - weight[i - 1]]);
+            }
+            else {
+                dp[i][w] = dp[i - 1][w];
+            }
+        }
+    }
+    printf("\nMaximum value that can be obtained = %d\n", dp[n][capacity]);
+    return 0;
+}
